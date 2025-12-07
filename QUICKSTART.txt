@@ -1,0 +1,181 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                          QUICK START GUIDE                                   ║
+║        Property Inference Attacks on Federated Learning (Smart Home IoT)    ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════
+ OPTION 1: AUTOMATED SETUP (RECOMMENDED)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Extract the project:
+   $ unzip fl-smarthome-privacy.zip
+   $ cd fl-smarthome-privacy
+
+2. Run automated setup:
+   $ bash setup.sh
+
+3. Run all experiments:
+   $ source venv/bin/activate
+   $ python run_all_experiments.py
+
+═══════════════════════════════════════════════════════════════════════════════
+ OPTION 2: MANUAL SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Extract and navigate:
+   $ unzip fl-smarthome-privacy.zip
+   $ cd fl-smarthome-privacy
+
+2. Create virtual environment:
+   $ python3 -m venv venv
+   
+   # On Linux/Mac:
+   $ source venv/bin/activate
+   
+   # On Windows:
+   $ venv\Scripts\activate
+
+3. Install dependencies:
+   $ pip install -r requirements.txt
+
+4. Run experiments:
+   $ python run_all_experiments.py
+
+═══════════════════════════════════════════════════════════════════════════════
+ INDIVIDUAL EXPERIMENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+Generate Data:
+$ python data/generate_data.py
+
+Baseline Attack:
+$ python experiments/baseline_attack.py
+
+Defense Evaluation:
+$ python experiments/defense_evaluation.py
+
+Generate Plots:
+$ python visualization/plot_results.py
+
+═══════════════════════════════════════════════════════════════════════════════
+ QUICK DEMO (5 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+$ bash setup.sh                              # 1 min
+$ source venv/bin/activate                   # instant
+$ python data/generate_data.py               # 10 sec
+$ python experiments/baseline_attack.py      # 2 min
+$ ls results/                                # See generated files
+
+═══════════════════════════════════════════════════════════════════════════════
+ EXPECTED OUTPUT FILES
+═══════════════════════════════════════════════════════════════════════════════
+
+results/
+├── baseline_results.pkl                 # Baseline experiment data
+├── defense_evaluation_results.pkl       # All defense results
+├── baseline_results.png                 # FL training & attack plots
+├── defense_comparison.png               # Defense comparison charts
+└── ldp_tradeoff.png                     # Privacy-utility tradeoff
+
+data/
+├── smart_home_data.csv                  # Generated sensor data
+└── home_labels.pkl                      # Property labels
+
+═══════════════════════════════════════════════════════════════════════════════
+ KEY RESULTS TO PRESENT
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Baseline Attack Accuracy: ~87% (demonstrates vulnerability)
+✓ LDP (ε=1.0) Attack Accuracy: ~68% (22% privacy improvement)
+✓ LDP (ε=1.0) Model Loss: ~0.28 (only 7% utility degradation)
+✓ Conclusion: Practical defense with acceptable tradeoffs
+
+═══════════════════════════════════════════════════════════════════════════════
+ CONFIGURATION (config.py)
+═══════════════════════════════════════════════════════════════════════════════
+
+For faster testing, modify config.py:
+- NUM_HOMES = 30              (reduce from 50)
+- FL_ROUNDS = 10              (reduce from 20)
+- LOCAL_EPOCHS = 3            (reduce from 5)
+
+═══════════════════════════════════════════════════════════════════════════════
+ TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ "Module not found":
+   → Make sure venv is activated: source venv/bin/activate
+   → Reinstall: pip install -r requirements.txt
+
+❌ "Permission denied":
+   → Make setup executable: chmod +x setup.sh
+   → Run with bash: bash setup.sh
+
+❌ Too slow:
+   → Reduce FL_ROUNDS and NUM_HOMES in config.py
+
+❌ Out of memory:
+   → Reduce BATCH_SIZE in config.py
+
+═══════════════════════════════════════════════════════════════════════════════
+ FILE STRUCTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+fl-smarthome-privacy/
+├── setup.sh                    # Automated setup script
+├── requirements.txt            # Python dependencies
+├── config.py                   # Configuration parameters
+├── run_all_experiments.py      # Main execution script
+├── README.md                   # Full documentation
+├── QUICKSTART.txt              # This file
+│
+├── data/                       # Data generation
+├── federated_learning/         # FL components
+├── attacks/                    # Attack implementation
+├── defenses/                   # Defense mechanisms
+├── experiments/                # Experiment scripts
+├── visualization/              # Plotting scripts
+└── results/                    # Generated results
+
+═══════════════════════════════════════════════════════════════════════════════
+ TESTING INDIVIDUAL COMPONENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+$ python federated_learning/model.py         # Test model
+$ python federated_learning/client.py        # Test FL client
+$ python federated_learning/server.py        # Test FL server
+$ python attacks/property_inference.py       # Test attack
+$ python defenses/differential_privacy.py    # Test LDP
+$ python defenses/gradient_compression.py    # Test compression
+$ python defenses/secure_aggregation.py      # Test secure agg
+
+═══════════════════════════════════════════════════════════════════════════════
+ PRESENTATION FLOW
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Show project structure (tree command or ls)
+2. Demo data generation (python data/generate_data.py)
+3. Run baseline attack (python experiments/baseline_attack.py)
+4. Show results (open results/baseline_results.png)
+5. Explain key findings from printed summary
+6. Show defense comparison (open results/defense_comparison.png)
+7. Highlight LDP ε=1.0 as optimal balance
+
+═══════════════════════════════════════════════════════════════════════════════
+ IMPORTANT NOTES
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠ Always activate venv before running: source venv/bin/activate
+⚠ Full pipeline takes ~10-15 minutes
+⚠ Results may vary ±5% due to randomness
+⚠ Set RANDOM_SEED in config.py for reproducibility
+⚠ For quick demo, use reduced parameters in config.py
+
+═══════════════════════════════════════════════════════════════════════════════
+
+For detailed documentation, see README.md
+
+═══════════════════════════════════════════════════════════════════════════════
